@@ -50,6 +50,7 @@ export async function POST(request: Request) {
     .from("clients")
     .select("id")
     .eq("id", result.data.client_id)
+    .eq("user_id", user.id)
     .single();
 
   if (clientError || !client) {

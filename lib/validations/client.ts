@@ -4,7 +4,18 @@ const clientStatusEnum = z.enum(["active", "inactive"]);
 
 export const createClientSchema = z.object({
   name: z.string().trim().min(1).max(120),
-  email: z.string().trim().email().max(255).optional(),
+  email: z
+    .preprocess(
+      (value) => {
+        if (typeof value !== "string") {
+          return value;
+        }
+
+        const trimmed = value.trim();
+        return trimmed === "" ? undefined : trimmed;
+      },
+      z.string().email().max(255).optional(),
+    ),
   phone: z.string().trim().max(50).optional(),
   company: z.string().trim().max(120).optional(),
   address: z.string().trim().max(400).optional(),
