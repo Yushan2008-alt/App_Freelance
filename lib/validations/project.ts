@@ -9,8 +9,8 @@ export const createProjectSchema = z.object({
   status: projectStatusEnum.default("draft"),
   value: z.number().nonnegative().default(0),
   currency: z.string().trim().min(3).max(3).default("IDR"),
-  start_date: z.string().date().optional(),
-  deadline: z.string().date().optional(),
+  start_date: z.string().regex(/^\d{4}-\d{2}-\d{2}$/).optional(),
+  deadline: z.string().regex(/^\d{4}-\d{2}-\d{2}$/).optional(),
 });
 
 export type CreateProjectInput = z.infer<typeof createProjectSchema>;
